@@ -4,6 +4,7 @@ import RadioButtonsPage from "../../pageObjects/radioButtonsPage";
 import WebTablesPage from "../../pageObjects/webTablesPage";
 import ButtonsPage from "../../pageObjects/buttonsPage";
 import LinksPage from "../../pageObjects/linksPage";
+import SelectablesPage from "../../pageObjects/selectablePage";
 
 context("Elements Page", () => {
   context("Text box scenarios", () => {
@@ -176,12 +177,42 @@ context("Elements Page", () => {
       // Preconditions
       LinksPage.visit();
     });
-    it.only("Click Links buttons", () => {
-      cy.intercept("GET", "created", { statusCode: 500 }).as("getCreated");
-      LinksPage.createdLink.click();
-      cy.wait("@getCreated").then((data) => {
-        expect(data.response.statusCode).to.eq(201);
+  //  it.only("Click Links buttons", () => {
+  //     cy.intercept("GET", "created", { statusCode: 500 }).as("getCreated");
+  //     LinksPage.createdLink.click();
+  //     cy.wait("@getCreated").then((data) => {
+  //     expect(data.response.statusCode).to.eq(201);
+  //    });
+ //   });
+    context("Selectables scenarios", () => {
+      beforeEach(() => {
+        // Preconditions
+        SelectablesPage.visit();
+      });
+      it.only("Selectable list", () => {
+        SelectablesPage.firstSelectable.click();
+        SelectablesPage.thirdSelectable.click();
+        SelectablesPage.firstSelectable.should("have.class", "active")
+        SelectablesPage.thirdSelectable.should("have.class", "active")
+        SelectablesPage.secondSelectable.should("not.have.class", "active")
+        SelectablesPage.fourthSelectable.should("not.have.class", "active")
+        });
+        it.only("Selectable grid", () => {
+          SelectablesPage.navGrid.click();
+          SelectablesPage.twoSelectable.click();
+          SelectablesPage.fourSelectable.click();
+          SelectablesPage.sixSelectable.click();
+          SelectablesPage.eightSelectable.click();
+          SelectablesPage.twoSelectable.should("have.class", "active")
+          SelectablesPage.fourSelectable.should("have.class", "active")
+          SelectablesPage.sixSelectable.should("have.class", "active")
+          SelectablesPage.eightSelectable.should("have.class", "active")
+          SelectablesPage.oneSelectable.should("not.have.class", "active")
+          SelectablesPage.threeSelectable.should("not.have.class", "active")
+          SelectablesPage.fiveSelectable.should("not.have.class", "active")
+          SelectablesPage.nineSelectable.should("not.have.class", "active")
+          });
       });
     });
   });
-});
+
